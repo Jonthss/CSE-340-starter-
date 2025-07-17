@@ -1,0 +1,18 @@
+<% /* views/errors/error.ejs */ %>
+
+<% if (title) { %>
+  <h1><%= title %></h1>
+<% } else { %>
+  <h1>Oops! Something went wrong!</h1>
+<% } %>
+
+<p>It seems our data delivery car had a small mishap. 😅</p>
+
+<% if (message) { %>
+  <p><%= message %></p>
+<% } else { %>
+  <p>Don't worry, our digital mechanics are already working to fix this. Please try again later!</p>
+<% } %>
+
+<p>In the meantime, how about taking a look at our amazing vehicles?</p>
+<p><a href="/" title="Back to home page">Back to Home Page</a></p>
