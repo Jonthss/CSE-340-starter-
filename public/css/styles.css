@@ -1,3 +1,5 @@
+/* public/css/styles.css */
+
 /******* Change Box Model ***************/
 *,
 *:before,
@@ -33,7 +35,7 @@ body {
   background-color: var(--white);
   color: var(--dark-color);
   line-height: 1.6;
-  background-image: 
+  background-image:
     linear-gradient(45deg, var(--black) 25%, transparent 25%),
     linear-gradient(-45deg, var(--black) 25%, transparent 25%),
     linear-gradient(45deg, transparent 75%, var(--black) 75%),
@@ -312,6 +314,99 @@ footer p {
   font-size: 0.9rem;
 }
 
+/* Inventory Grid Styling */
+#inv-display { /* O elemento <ul> para a grade de veículos */
+    display: grid;
+    /* Colunas de grade responsivas: 1 coluna em telas pequenas, depois auto-ajuste para maiores */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* minmax ajustado para cartões ligeiramente maiores */
+    gap: 20px; /* Espaço entre os itens da grade */
+    list-style: none; /* Remover marcadores */
+    padding: 0;
+    margin: 30px 0; /* Adicionar margem vertical */
+}
+
+#inv-display li {
+    background-color: var(--light-gray); /* Usar um fundo claro das suas variáveis */
+    border: 1px solid var(--light-color); /* Borda sutil */
+    border-radius: 8px; /* Cantos arredondados para cada cartão de veículo */
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Sombra mais pronunciada */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Efeito de transição suave ao passar o mouse */
+    display: flex; /* Usar flexbox para o layout interno do item da lista */
+    flex-direction: column; /* Empilhar o conteúdo verticalmente */
+    justify-content: space-between; /* Empurrar o preço para baixo */
+    overflow: hidden; /* Garantir que os cantos arredondados cortem o conteúdo */
+}
+
+#inv-display li:hover {
+    transform: translateY(-8px); /* Levantar mais o cartão ao passar o mouse */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); /* Sombra mais forte ao passar o mouse */
+}
+
+#inv-display li a { /* Estilização para o link da imagem principal */
+    text-decoration: none; /* Remover sublinhado do link da imagem */
+    color: inherit; /* Herdar a cor do texto */
+    display: block; /* Tornar o link em nível de bloco */
+}
+
+#inv-display li img {
+    max-width: 100%; /* Garantir que as imagens se ajustem ao seu contêiner */
+    height: 180px; /* Altura fixa para consistência */
+    object-fit: cover; /* Cobrir a área, cortando se necessário */
+    border-radius: 5px; /* Cantos arredondados para as imagens */
+    margin-bottom: 15px;
+    border: 1px solid var(--accent-color); /* Adicionar uma borda sutil */
+}
+
+.namePrice { /* A div contendo o nome e o preço do veículo */
+    margin-top: auto; /* Empurra esta div para a parte inferior do contêiner flex */
+    padding-top: 10px;
+    border-top: 1px solid var(--accent-color); /* Usar a cor de destaque para o separador */
+}
+
+.namePrice hr { /* Você pode não precisar disso se estiver usando border-top em .namePrice */
+    display: none; /* Ocultar o hr se você preferir border-top na div */
+}
+
+.namePrice h2 {
+    font-size: 1.3rem; /* Título ligeiramente maior */
+    margin: 0 0 8px 0;
+    color: var(--dark-color); /* Usar sua variável de cor escura */
+}
+
+.namePrice h2 a {
+    text-decoration: none;
+    color: var(--primary-color); /* Usar sua cor primária para links */
+    transition: color 0.3s ease;
+}
+
+.namePrice h2 a:hover {
+    color: var(--secondary-color); /* Mudar a cor ao passar o mouse */
+    text-decoration: underline;
+}
+
+.namePrice span {
+    font-size: 1.2rem;
+    font-weight: 700; /* Preço mais em negrito */
+    color: var(--secondary-color); /* Usar sua cor secundária para o preço */
+    display: block; /* Garantir que o preço esteja em sua própria linha */
+    margin-top: 5px;
+}
+
+/* Ajustes específicos para o aviso "Desculpe, nenhum veículo correspondente foi encontrado." */
+.notice {
+    text-align: center;
+    font-size: 1.2rem;
+    color: var(--gray);
+    padding: 30px;
+    background-color: var(--light-gray);
+    border-radius: 8px;
+    margin: 50px auto;
+    max-width: 600px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
 /******* Media Queries for Larger Screens ***************/
 @media screen and (min-width: 768px) {
   main {
@@ -400,4 +495,21 @@ footer p {
     margin: 0 auto 20px;
     max-width: 1000px;
   }
+
+  #inv-display {
+      /* Em telas maiores, você pode querer um minmax ligeiramente mais amplo ou mais colunas */
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+}
+
+/* Exemplo para telas muito pequenas, se necessário, fora da media query de 768px */
+@media screen and (max-width: 500px) {
+    #inv-display {
+        grid-template-columns: 1fr; /* Forçar uma única coluna em celulares muito pequenos */
+        padding: 0 10px; /* Adicionar algum preenchimento horizontal à própria grade */
+    }
+
+    #inv-display li {
+        padding: 10px; /* Reduzir o preenchimento nos cartões para telas menores */
+    }
 }
