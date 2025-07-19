@@ -5,36 +5,48 @@
 /* ***********************
  * Require Statements
  *************************/
-const express = require("express")
-const expressLayouts = require("express-ejs-layouts")
-const env = require("dotenv").config()
-const app = express()
-const static = require("./routes/static")
+const express = require("express");
+const expressLayouts = require("express-ejs-layouts");
+const env = require("dotenv").config();
+const path = require("path"); // Add this line
+const app = express();
+const static = require("./routes/static");
 const baseController = require("./controllers/baseController")
-const inventoryRoute = require("./routes/inventoryRoute")
-const utilities = require("./utilities/") // <-- ADICIONADO: Importa o módulo de utilitários
+const inventoryRoute = require("./routes/inventoryRoute");
+const utilities = require("./utilities/index");
 
 /* ***********************
  * View Engine and Templates
  *************************/
-app.set("view engine", "ejs")
-app.use(expressLayouts)
-app.set("layout", "./layouts/layout") // not at views root
+app.set("view engine", "ejs");
+app.use(expressLayouts);
+app.set("layout", "./layouts/layout"); // not at views root
 
+/* ***********************
+ * Static file serving (should be early)
+ *************************/
+app.use("/images", express.static(path.join(__dirname, "public/images")));
+app.use("/css", express.static(path.join(__dirname, "public/css")));
+app.use("/js", express.static(path.join(__dirname, "public/js")));
+app.use(static);
 
 /* ***********************
  * Routes
  *************************/
-app.use(static)
-
-// Index route
-app.get("/", baseController.buildHome)
+// Base controller routes
+app.get("/", utilities.handleErrors(baseController.buildHome))
 
 // Inventory routes
 app.use("/inv", inventoryRoute)
 
+// Intentional Error Route for testing (before 404 handler)
+app.get("/trigger-error", (req, res, next) => {
+  const error = new Error("This is an intentional 500 error for testing!")
+  error.status = 500
+  throw error
+})
+
 // File Not Found Route - must be last route in list
-// This route should catch any requests that didn't match previous routes
 app.use(async (req, res, next) => {
   next({status: 404, message: 'Sorry, we appear to have lost that page.'})
 })
@@ -43,23 +55,18 @@ app.use(async (req, res, next) => {
 * Express Error Handler
 * Place after all other middleware
 *************************/
-// This is the LAST middleware to handle any errors that occur
 app.use(async (err, req, res, next) => {
   let nav = await utilities.getNav()
   console.error(`Error at: "${req.originalUrl}": ${err.message}`)
   let message
-  let status = err.status || 500 // Default to 500 if no status is provided
-
-  // Customize message for 404
-  if (status == 404) {
-    message = err.message || 'Sorry, we appear to have lost that page.'
+  if(err.status == 404){ 
+    message = err.message
   } else {
-    message = err.message || 'Oh no! There was a crash. Maybe try a different route?'
+    message = 'Oh no! There was a crash. Maybe try a different route?'
   }
-
   res.render("errors/error", {
-    title: status + ' Error', // Use status in the title
-    message: message,
+    title: err.status || 'Server Error',
+    message,
     nav
   })
 })
@@ -68,12 +75,12 @@ app.use(async (err, req, res, next) => {
  * Local Server Information
  * Values from .env (environment) file
  *************************/
-const port = process.env.PORT
-const host = process.env.HOST
+const port = process.env.PORT;
+const host = process.env.HOST;
 
 /* ***********************
  * Log statement to confirm server operation
  *************************/
 app.listen(port, () => {
-  console.log(`app listening on ${host}:${port}`)
-})
+  console.log(`app listening on ${host}:${port}`);
+});

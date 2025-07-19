@@ -1,515 +1,693 @@
-/* public/css/styles.css */
+/* Mobile First CSS - Base styles for mobile devices */
 
-/******* Change Box Model ***************/
-*,
-*:before,
-*:after {
+* {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
-/******* Import Google Fonts ***************/
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
-
-/******* Variables ***************/
-:root {
-  --primary-color: #0077be;
-  --secondary-color: #00b4d8;
-  --accent-color: #90e0ef;
-  --dark-color: #03045e;
-  --light-color: #caf0f8;
-  --white: #ffffff;
-  --black: #000000;
-  --gray: #6c757d;
-  --light-gray: #f8f9fa;
-}
-
-/******* Base Styles ***************/
-html {
-  font-size: 16px;
-}
-
 body {
-  font-family: 'Roboto', Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: var(--white);
-  color: var(--dark-color);
+  font-family: "Arial", sans-serif;
   line-height: 1.6;
-  background-image:
-    linear-gradient(45deg, var(--black) 25%, transparent 25%),
-    linear-gradient(-45deg, var(--black) 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, var(--black) 75%),
-    linear-gradient(-45deg, transparent 75%, var(--black) 75%);
-  background-size: 20px 20px;
-  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+  color: #333;
+  background: repeating-linear-gradient(
+    45deg,
+    #000,
+    #000 10px,
+    #fff 10px,
+    #fff 20px
+  );
+  min-height: 100vh;
+  padding: 10px;
 }
 
-main {
-  background-color: var(--white);
-  margin: 20px;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+#wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: white;
+  min-height: calc(100vh - 20px);
+  border: 3px solid #00bcd4;
+  position: relative;
 }
 
-/******* Header Styles ***************/
+/* Header Styles - WHITE BACKGROUND */
 #top-header {
-  background-color: var(--white);
-  padding: 20px;
+  background-color: #ffffff;
+  color: #000;
+  padding: 15px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 3px solid var(--primary-color);
-  margin: 20px;
-  border-radius: 8px 8px 0 0;
+  border-bottom: 2px solid #ddd;
+}
+
+.siteName {
+  font-weight: bold;
+  font-size: 1.5rem;
 }
 
 .siteName a {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: var(--dark-color);
+  color: #000;
   text-decoration: none;
-  transition: color 0.3s ease;
+  font-weight: bold;
+  font-size: 1.5rem;
 }
 
 .siteName a:hover {
-  color: var(--primary-color);
+  text-decoration: none;
+}
+
+#tools {
+  font-weight: bold;
 }
 
 #tools a {
-  color: var(--gray);
+  color: #000;
   text-decoration: none;
   font-size: 0.9rem;
-  transition: color 0.3s ease;
+  text-transform: uppercase;
+  font-weight: bold;
 }
 
 #tools a:hover {
-  color: var(--primary-color);
-  text-decoration: underline;
+  text-decoration: none;
 }
 
-/******* Navigation Styles ***************/
+/* Navigation Styles - DARK BLUE/BLACK BACKGROUND, HORIZONTAL */
 nav {
-  background-color: var(--dark-color);
-  margin: 0 20px;
+  background-color: #1a237e;
+  width: 100%;
 }
 
 nav ul {
   list-style: none;
-  margin: 0;
-  padding: 0;
   display: flex;
   flex-direction: row;
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
 
 nav li {
-  margin: 0;
   flex: 1;
-  text-align: center;
+  border-right: 1px solid #3949ab;
+}
+
+nav li:last-child {
+  border-right: none;
 }
 
 nav a {
   display: block;
-  color: var(--white);
+  color: white;
   text-decoration: none;
-  padding: 12px 8px;
-  transition: background-color 0.3s ease;
+  padding: 15px 10px;
+  text-align: center;
+  transition: background-color 0.3s;
   font-weight: 500;
   font-size: 0.9rem;
-  border-right: 1px solid rgba(255,255,255,0.2);
-}
-
-nav li:last-child a {
-  border-right: none;
 }
 
 nav a:hover {
-  background-color: var(--primary-color);
-}
-
-/******* Main Content Styles ***************/
-h1 {
-  color: var(--dark-color);
-  font-size: 1.8rem;
-  margin-bottom: 30px;
-  text-align: left;
-}
-
-h2 {
-  color: var(--dark-color);
-  font-size: 1.4rem;
-  margin-bottom: 20px;
-}
-
-/******* Hero Section ***************/
-.hero-section {
-  margin-bottom: 40px;
-  position: relative;
-}
-
-.hero-content {
-  background-color: rgba(255, 255, 255, 0.95);
-  padding: 90px;
-  border-radius: 8px;
-  position: relative;
-  z-index: 2;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
-
-.hero-content h2 {
-  color: var(--secondary-color);
-  font-size: 1.8rem;
-  margin-bottom: 15px;
-  font-weight: 700;
-}
-
-.delorean-features {
-  list-style: none;
-  padding: 0;
-  margin-bottom: 20px;
-  color: var(--secondary-color);
-  font-weight: 400;
-  font-size: 1.1rem;
-}
-
-.delorean-features li {
-  margin-bottom: 8px;
-  padding-left: 20px;
-  position: relative;
-}
-
-.delorean-features li:before {
-  content: "•";
-  position: absolute;
-  left: 0;
-  color: var(--secondary-color);
-  font-weight: bold;
-}
-
-.own-today-link {
-  display: inline-block;
+  background-color: #3949ab;
   text-decoration: none;
 }
 
-.own-today-btn {
-    max-width: 180px;
-    height: auto;
-    cursor: pointer;
-    display: block;
-    margin: 0 auto; /* Centraliza horizontalmente */
-    transition: transform 0.3s ease;
+/* Main Content */
+main {
+  padding: 20px;
+  background-color: white;
 }
 
-.own-today-link:hover .own-today-btn {
-  transform: scale(1.05);
+h1 {
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+h2 {
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+/* Hero Section */
+.hero {
+  margin-bottom: 30px;
+}
+
+.hero-content {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 20px;
+  background-color: #fff;
+}
+
+.hero-text {
+  background-color: rgba(255, 255, 255, 0.9); /* Transparent white */
+  padding: 20px;
+  border-radius: 10px;
+  position: absolute;
+  z-index: 2;
+  left: 180px;
+  max-width: 250px;
+}
+
+.hero-text h2 {
+  color: #00bcd4;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.hero-text ul {
+  margin: 10px 0;
+  padding-left: 20px;
+  color: #00bcd4;
+  list-style: disc;
+}
+
+.hero-text li {
+  margin-bottom: 5px;
+}
+
+.cta-button {
+  background-color: #04616b;
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: bold;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.cta-button:hover {
+  background-color: #008ba3;
 }
 
 .hero-image {
-  margin-top: 20px;
+  flex: 1;
+  text-align: right;
 }
 
 .hero-image img {
-  width: 100%;
+  max-width: 100%;
   height: auto;
-  display: block;
-  padding-right: 100px;
+  max-height: 300px;
 }
 
-/******* Content Wrapper ***************/
-.content-wrapper {
+.hero-text h2 {
+  color: #00bcd4;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.hero-text ul {
+  margin: 15px 0;
+  padding-left: 20px;
+  list-style: disc;
+  color: #00bcd4;
+}
+
+.hero-text li {
+  margin-bottom: 5px;
+}
+
+.hero-image {
+  order: 1;
+  text-align: center;
+}
+
+.hero-image img {
+  max-width: 100%;
+  height: auto;
+  max-height: 200px;
+}
+
+/* Content Grid - Mobile: Stack vertically */
+.content-grid {
   display: flex;
   flex-direction: column;
   gap: 30px;
 }
 
-/******* Reviews Section ***************/
-.reviews-section {
-  background-color: var(--light-gray);
-  padding: 20px;
-  border-radius: 8px;
+/* Reviews Section */
+.reviews {
+  order: 2;
 }
 
-.reviews-list {
+.reviews ul {
   list-style: none;
   padding: 0;
 }
 
-.reviews-list li {
-  margin-bottom: 12px;
-  padding-left: 25px;
-  position: relative;
-  color: var(--gray);
-  font-style: italic;
+.reviews li {
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  color: #333;
 }
 
-.reviews-list li:before {
-  content: "★";
-  position: absolute;
-  left: 0;
-  color: var(--secondary-color);
+.reviews li:before {
+  content: "• ";
+  color: #00bcd4;
+  font-weight: bold;
 }
 
-/******* Upgrades Section ***************/
-.upgrades-section {
-  background-color: var(--light-gray);
-  padding: 20px;
-  border-radius: 8px;
+/* Upgrades Section */
+.upgrades {
+  order: 1;
 }
 
-.upgrades-grid {
+.upgrade-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, 1fr);
   gap: 15px;
 }
 
 .upgrade-item {
-  background-color: var(--secondary-color);
-  border: 2px solid var(--secondary-color);
-  overflow: hidden;
   text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: #006064;
+  padding: 15px;
+  border-radius: 8px;
+  transition: transform 0.3s;
 }
 
 .upgrade-item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-}
-
-.upgrade-item img {
-  width: 100%;
-  height: auto;
-  display: block;
-  max-height: 120px;
-  object-fit: contain;
-  padding: 10px;
-  background-color: var(--white);
+  transform: translateY(-2px);
 }
 
 .upgrade-item a {
-  display: block;
-  padding: 15px;
-  color: var(--white);
+  color: white;
   text-decoration: none;
-  font-weight: 500;
-  background-color: var(--dark-color);
-  transition: background-color 0.3s ease;
+  display: block;
 }
 
 .upgrade-item a:hover {
-  background-color: var(--primary-color);
+  text-decoration: none;
 }
 
-/******* Footer Styles ***************/
+.upgrade-item img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  background-color: white;
+  padding: 5px;
+}
+
+.upgrade-item span {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: white;
+}
+
+/* Footer */
 footer {
-  background-color: var(--dark-color);
-  color: var(--white);
+  background-color: #f5f5f5;
+  color: #333;
   text-align: center;
-  padding: 20px;
-  margin: 0 20px 20px;
-  border-radius: 0 0 8px 8px;
+  padding: 15px;
+  margin-top: 30px;
+  border-top: 1px solid #ddd;
+  font-size: 0.85rem;
 }
-
-footer p {
+/* Classification Grid Styling - IMPROVED CARDS */
+#inv-display {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  list-style: none;
+  padding: 1.5rem;
   margin: 0;
-  font-size: 0.9rem;
-}
-
-/* Inventory Grid Styling */
-#inv-display { /* O elemento <ul> para a grade de veículos */
-    display: grid;
-    /* Colunas de grade responsivas: 1 coluna em telas pequenas, depois auto-ajuste para maiores */
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* minmax ajustado para cartões ligeiramente maiores */
-    gap: 20px; /* Espaço entre os itens da grade */
-    list-style: none; /* Remover marcadores */
-    padding: 0;
-    margin: 30px 0; /* Adicionar margem vertical */
 }
 
 #inv-display li {
-    background-color: var(--light-gray); /* Usar um fundo claro das suas variáveis */
-    border: 1px solid var(--light-color); /* Borda sutil */
-    border-radius: 8px; /* Cantos arredondados para cada cartão de veículo */
-    padding: 15px;
-    text-align: center;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Sombra mais pronunciada */
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Efeito de transição suave ao passar o mouse */
-    display: flex; /* Usar flexbox para o layout interno do item da lista */
-    flex-direction: column; /* Empilhar o conteúdo verticalmente */
-    justify-content: space-between; /* Empurrar o preço para baixo */
-    overflow: hidden; /* Garantir que os cantos arredondados cortem o conteúdo */
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 0;
+  text-align: center;
+  background-color: #ffffff;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 
 #inv-display li:hover {
-    transform: translateY(-8px); /* Levantar mais o cartão ao passar o mouse */
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); /* Sombra mais forte ao passar o mouse */
+  transform: translateY(-8px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  border-color: #00bcd4;
 }
 
-#inv-display li a { /* Estilização para o link da imagem principal */
-    text-decoration: none; /* Remover sublinhado do link da imagem */
-    color: inherit; /* Herdar a cor do texto */
-    display: block; /* Tornar o link em nível de bloco */
+/* Vehicle Card Images - Use thumbnail images and fit properly */
+#inv-display img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 0;
+  margin-bottom: 0;
+  transition: transform 0.3s ease;
 }
 
-#inv-display li img {
-    max-width: 100%; /* Garantir que as imagens se ajustem ao seu contêiner */
-    height: 180px; /* Altura fixa para consistência */
-    object-fit: cover; /* Cobrir a área, cortando se necessário */
-    border-radius: 5px; /* Cantos arredondados para as imagens */
-    margin-bottom: 15px;
-    border: 1px solid var(--accent-color); /* Adicionar uma borda sutil */
+#inv-display li:hover img {
+  transform: scale(1.05);
 }
 
-.namePrice { /* A div contendo o nome e o preço do veículo */
-    margin-top: auto; /* Empurra esta div para a parte inferior do contêiner flex */
-    padding-top: 10px;
-    border-top: 1px solid var(--accent-color); /* Usar a cor de destaque para o separador */
+/* Card Content Area */
+.namePrice {
+  padding: 1rem;
+  background-color: #ffffff;
 }
 
-.namePrice hr { /* Você pode não precisar disso se estiver usando border-top em .namePrice */
-    display: none; /* Ocultar o hr se você preferir border-top na div */
+.namePrice hr {
+  border: none;
+  height: 2px;
+  background: linear-gradient(to right, #00bcd4, #04616b);
+  margin: 0.5rem 0 1rem 0;
+  border-radius: 1px;
 }
 
 .namePrice h2 {
-    font-size: 1.3rem; /* Título ligeiramente maior */
-    margin: 0 0 8px 0;
-    color: var(--dark-color); /* Usar sua variável de cor escura */
+  color: #2c3e50;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
 }
 
 .namePrice h2 a {
-    text-decoration: none;
-    color: var(--primary-color); /* Usar sua cor primária para links */
-    transition: color 0.3s ease;
+  text-decoration: none;
+  color: #2c3e50;
+  transition: color 0.3s ease;
 }
 
 .namePrice h2 a:hover {
-    color: var(--secondary-color); /* Mudar a cor ao passar o mouse */
-    text-decoration: underline;
+  color: #00bcd4;
 }
 
 .namePrice span {
-    font-size: 1.2rem;
-    font-weight: 700; /* Preço mais em negrito */
-    color: var(--secondary-color); /* Usar sua cor secundária para o preço */
-    display: block; /* Garantir que o preço esteja em sua própria linha */
-    margin-top: 5px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #000000;
+  display: block;
+  margin-top: 0.5rem;
 }
 
-/* Ajustes específicos para o aviso "Desculpe, nenhum veículo correspondente foi encontrado." */
-.notice {
+/* IMPROVED DETAIL VIEW STYLING */
+.detail-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin: 1rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e9ecef;
+}
+
+.detail-image {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.detail-image img {
+  width: 100%;
+  height: auto;
+  min-height: 300px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+}
+
+.detail-image:hover img {
+  transform: scale(1.03);
+}
+
+.detail-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.detail-info h2 {
+  margin-top: 0;
+  color: #2c3e50;
+  font-size: 2.2rem;
+  font-weight: 700;
+  border-bottom: 3px solid #00bcd4;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+  text-transform: capitalize;
+}
+
+.detail-price {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 1rem 0 1.5rem 0;
+  background: linear-gradient(135deg, #00bcd4 0%, #04616b 100%);
+  padding: 1.2rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 188, 212, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.detail-price::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transform: rotate(45deg);
+  transition: all 0.5s;
+}
+
+.detail-price:hover::before {
+  animation: shine 0.5s ease-in-out;
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(100%) translateY(100%) rotate(45deg);
+  }
+}
+
+.detail-description,
+.detail-color,
+.detail-miles,
+.detail-year {
+  margin: 1rem 0;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: #ffffff;
+  border-left: 4px solid #00bcd4;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  line-height: 1.6;
+}
+
+.detail-description {
+  font-style: italic;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border-left: 4px solid #04616b;
+  font-size: 1.1rem;
+  color: #495057;
+}
+
+.detail-color strong,
+.detail-miles strong,
+.detail-year strong {
+  color: #2c3e50;
+  font-weight: 600;
+  display: inline-block;
+  min-width: 80px;
+}
+
+.detail-color,
+.detail-miles,
+.detail-year {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  color: #495057;
+}
+
+/* Mobile Responsive for Detail View */
+@media screen and (max-width: 768px) {
+  .detail-container {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin: 0.5rem;
+    padding: 1.5rem;
+  }
+
+  .detail-info h2 {
+    font-size: 1.8rem;
     text-align: center;
-    font-size: 1.2rem;
-    color: var(--gray);
-    padding: 30px;
-    background-color: var(--light-gray);
-    border-radius: 8px;
-    margin: 50px auto;
-    max-width: 600px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  }
+
+  .detail-price {
+    font-size: 1.6rem;
+    margin: 1rem 0;
+  }
+
+  .detail-image img {
+    min-height: 250px;
+  }
+
+  /* Classification cards - single column on mobile */
+  #inv-display {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+    gap: 1rem;
+  }
 }
 
-/******* Media Queries for Larger Screens ***************/
-@media screen and (min-width: 768px) {
-  main {
-    margin: 20px auto;
+/* Medium screens */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  #inv-display {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .detail-container {
+    margin: 1.5rem;
+  }
+}
+
+/* Large screens */
+@media screen and (min-width: 1025px) {
+  #inv-display {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .detail-container {
     max-width: 1000px;
-    overflow: hidden;
-    position: relative;
+    margin: 2rem auto;
+  }
+}
+
+/* Media Queries for Larger Screens */
+@media screen and (min-width: 768px) {
+  body {
+    padding: 20px;
+  }
+
+  #wrapper {
+    min-height: calc(100vh - 40px);
   }
 
   #top-header {
-    margin: 20px auto;
-    max-width: 1000px;
+    padding: 20px 30px;
   }
 
-  nav {
-    margin: 0 auto;
-    max-width: 1000px;
+  .siteName a {
+    font-size: 1.8rem;
   }
 
-  nav a {
-    padding: 12px 20px;
+  #tools a {
     font-size: 1rem;
+  }
+
+  /* Navigation stays horizontal - just bigger */
+  nav a {
+    padding: 18px 15px;
+    font-size: 1rem;
+  }
+
+  /* Hero Section - Side by side */
+  .hero-content {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .hero-text {
+    flex: 1;
+    padding-right: 10px;
+    order: 1;
+  }
+
+  .hero-image {
+    flex: 1;
+    order: 2;
+  }
+
+  .hero-image img {
+    max-height: 300px;
+  }
+
+  /* Content Grid - Side by side */
+  .content-grid {
+    flex-direction: row;
+    gap: 40px;
+  }
+
+  .upgrades {
+    flex: 1;
+    order: 1;
+  }
+
+  .reviews {
+    flex: 1;
+    order: 2;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  main {
+    padding: 30px;
   }
 
   h1 {
     font-size: 2.2rem;
   }
 
-  .hero-section {
-    position: relative;
-    height: 400px;
-    margin-bottom: 60px;
-    overflow: visible;
+  h2 {
+    font-size: 1.4rem;
   }
 
-  .hero-image {
-    position: absolute;
-    right: -50px;
-    top: -30px;
-    width: 75%;
-    height: 110%;
-    margin-top: 0;
-    z-index: 1;
+  .hero-text h2 {
+    font-size: 1.8rem;
   }
 
-  .hero-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: right center;
+  .upgrade-item img {
+    width: 80px;
+    height: 80px;
   }
 
-  .hero-content {
-    position: absolute;
-    left: 90px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 300px;
-    background-color: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-    z-index: 2;
-    padding: 30px;
-  }
-
-  .content-wrapper {
-    flex-direction: row;
-    gap: 30px;
-  }
-
-  .reviews-section {
-    order: 2;
-    flex: 1;
-  }
-
-  .upgrades-section {
-    order: 1;
-    flex: 1;
-  }
-
-  .upgrades-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-  }
-
-  footer {
-    margin: 0 auto 20px;
-    max-width: 1000px;
-  }
-
-  #inv-display {
-      /* Em telas maiores, você pode querer um minmax ligeiramente mais amplo ou mais colunas */
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  .upgrade-item span {
+    font-size: 0.9rem;
   }
 }
 
-/* Exemplo para telas muito pequenas, se necessário, fora da media query de 768px */
-@media screen and (max-width: 500px) {
-    #inv-display {
-        grid-template-columns: 1fr; /* Forçar uma única coluna em celulares muito pequenos */
-        padding: 0 10px; /* Adicionar algum preenchimento horizontal à própria grade */
-    }
+/* Remove all underlines globally */
+a {
+  text-decoration: none;
+}
 
-    #inv-display li {
-        padding: 10px; /* Reduzir o preenchimento nos cartões para telas menores */
-    }
+a:hover {
+  text-decoration: none;
 }

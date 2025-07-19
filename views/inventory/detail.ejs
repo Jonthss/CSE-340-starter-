@@ -1,0 +1,50 @@
+<% if (title) { %>
+  <h1><%= title %></h1>
+<% } %>
+
+<%- grid %>
+
+<style>
+.detail-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.detail-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.detail-info h2 {
+  margin-top: 0;
+  color: #333;
+}
+
+.detail-price {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #2c5530;
+  margin: 1rem 0;
+}
+
+.detail-description {
+  line-height: 1.6;
+  margin: 1rem 0;
+}
+
+.detail-color,
+.detail-miles {
+  margin: 0.5rem 0;
+}
+
+/* Responsive design */
+@media screen and (max-width: 768px) {
+  .detail-container {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+</style>
