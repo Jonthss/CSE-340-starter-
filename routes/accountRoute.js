@@ -10,4 +10,7 @@ router.get("/login", utilities.handleErrors(accountController.buildLogin));
 // Route to build the registration view - Nova rota adicionada
 router.get("/register", utilities.handleErrors(accountController.buildRegister));
 
+// Route to process the registration data - Rota POST adicionada
+router.post("/register", utilities.handleErrors(accountController.registerAccount));
+
 module.exports = router;
