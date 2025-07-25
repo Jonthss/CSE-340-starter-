@@ -692,7 +692,7 @@ a:hover {
   text-decoration: none;
 }
 
-/* Container para centralizar o conteúdo da página de login */
+/* Container para centralizar o conteúdo da página */
 .account-form-container {
     display: flex;
     flex-direction: column;
@@ -700,69 +700,78 @@ a:hover {
     padding: 2rem;
 }
 
-/* Estilos para o formulário */
-#loginForm {
+/* Estilos genéricos para os formulários de conta (login e registro) */
+.account-form {
     background-color: #f4f4f4;
     padding: 2rem;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     width: 100%;
-    max-width: 450px; /* Define uma largura máxima para o formulário */
+    max-width: 450px;
 }
 
-#loginForm fieldset {
+.account-form fieldset {
     border: none;
     padding: 0;
     margin: 0;
 }
 
 /* Estilos para os rótulos (labels) */
-#loginForm label {
-    display: block; /* Faz com que cada rótulo ocupe uma linha */
+.account-form label {
+    display: block;
     margin-bottom: 0.5rem;
     font-weight: bold;
     color: #333;
 }
 
+/* Estilos para a descrição da senha */
+.account-form span {
+    display: block;
+    font-size: 0.8rem;
+    color: #666;
+    margin-top: 0.25rem;  
+    margin-bottom: 1rem;
+}
+
 /* Estilos para os campos de entrada (input) */
-#loginForm input {
+.account-form input {
     width: 100%;
     padding: 0.8rem;
     margin-bottom: 1.5rem;
     border: 1px solid #ccc;
     border-radius: 4px;
-    box-sizing: border-box; /* Garante que o padding não afete a largura total */
+    box-sizing: border-box;
 }
 
 /* Estilos para o botão */
-#loginForm button {
+.account-form button {
     width: 100%;
     padding: 0.8rem;
     border: none;
     border-radius: 4px;
-    background-color: #1a237e;
+    background-color: #1a237e; /* Cor principal */
     color: white;
     font-size: 1.1rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-#loginForm button:hover {
-    background-color: #3949ab;
+.account-form button:hover {
+    background-color: #3949ab; /* Cor ao passar o mouse */
 }
 
-/* Estilos para o link de 'Não tem uma conta?' */
-.signup-link {
+/* Estilos para o link inferior (Login/Sign-up) */
+.bottom-link {
     margin-top: 1.5rem;
     text-align: center;
 }
 
-.signup-link a {
+.bottom-link a {
     color: #3949ab;
     font-weight: bold;
     text-decoration: none;
 }
 
-.signup-link a:hover {
+.bottom-link a:hover {
     text-decoration: underline;
 }
