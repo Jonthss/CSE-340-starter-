@@ -1,0 +1,18 @@
+<%# The h1 title for the management view %>
+<% if (title) { %>
+    <h1><%- title %></h1>
+<% } else {
+    res.redirect('/')
+} %>
+
+<%# A placeholder for any flash messages %>
+<%- messages() %>
+
+<p>Welcome to the inventory management area. Please choose an option below:</p>
+
+<%# Links to add new classification and inventory %>
+<div class="management-links">
+    <a href="/inv/add-classification" title="Add a new vehicle classification">Add New Classification</a>
+    <br>
+    <a href="/inv/add-inventory" title="Add a new vehicle to inventory">Add New Vehicle</a>
+</div>
