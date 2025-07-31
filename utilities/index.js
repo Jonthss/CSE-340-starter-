@@ -1,5 +1,7 @@
 const invModel = require("../models/inventory-model");
 const Util = {};
+const jwt = require("jsonwebtoken")
+require("dotenv").config()
 
 /* ************************
  * Constructs the nav HTML unordered list
@@ -89,7 +91,7 @@ Util.buildDetailView = async function(data){
     detail = `
       <div class="detail-grid">
         <div class="detail-image">
-          <img src="${data.inv_image}" alt="[Image of ${data.inv_year} ${data.inv_make} ${data.inv_model}]">
+          <img src="${data.inv_image}" alt="">
         </div>
         <div class="detail-info">
           <h2>${data.inv_make} ${data.inv_model} Details</h2>
@@ -136,5 +138,40 @@ Util.buildClassificationList = async function (classification_id = null) {
 Util.handleErrors = (fn) => (req, res, next) =>
   Promise.resolve(fn(req, res, next)).catch(next);
 
+
+/* ****************************************
+* Middleware to check token validity
+**************************************** */
+Util.checkJWTToken = (req, res, next) => {
+ if (req.cookies.jwt) {
+  jwt.verify(
+   req.cookies.jwt,
+   process.env.ACCESS_TOKEN_SECRET,
+   function (err, accountData) {
+    if (err) {
+     req.flash("notice", "Please log in")
+     res.clearCookie("jwt")
+     return res.redirect("/account/login")
+    }
+    res.locals.accountData = accountData
+    res.locals.loggedin = 1
+    next()
+   })
+ } else {
+  next()
+ }
+}
+
+/* ****************************************
+ * Check Login
+ * ************************************ */
+Util.checkLogin = (req, res, next) => {
+  if (res.locals.loggedin) {
+    next()
+  } else {
+    req.flash("notice", "Please log in.")
+    return res.redirect("/account/login")
+  }
+}
 
 module.exports = Util;

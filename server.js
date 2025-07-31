@@ -8,16 +8,17 @@
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
 const env = require("dotenv").config();
-const path = require("path"); // Add this line
+const path = require("path"); 
 const app = express();
 const static = require("./routes/static");
-const baseController = require("./controllers/baseController")
+const baseController = require("./controllers/baseController");
 const inventoryRoute = require("./routes/inventoryRoute");
 const accountRoute = require("./routes/accountRoute");
 const utilities = require("./utilities/index");
 const session = require("express-session")
-const pool = require('./database/')
+const pool = require('./database/');
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 
 
 /* ***********************
@@ -34,6 +35,11 @@ const bodyParser = require("body-parser");
   name: 'sessionId',
 }))
 
+// Set up cookie parser middleware
+app.use(cookieParser())
+
+// JWT Token Check Middleware (Global)
+app.use(utilities.checkJWTToken);
 
 // Express Messages Middleware
 app.use(require('connect-flash')())
@@ -41,7 +47,6 @@ app.use(function(req, res, next){
   res.locals.messages = require('express-messages')(req, res)
   next()
 })
-
 
 // Body Parser Middleware
 app.use(bodyParser.json());
