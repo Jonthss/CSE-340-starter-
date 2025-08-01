@@ -94,4 +94,56 @@ validate.checkInventoryData = async (req, res, next) => {
         next();
 };
 
+/* **********************************
+ * Check inventory data and return errors to edit view
+ * ********************************* */
+validate.checkUpdateData = async (req, res, next) => {
+  // Destructure all form fields, including the new inv_id
+  const { 
+    inv_id, 
+    inv_make, 
+    inv_model, 
+    inv_year, 
+    inv_description, 
+    inv_image, 
+    inv_thumbnail, 
+    inv_price, 
+    inv_miles, 
+    inv_color, 
+    classification_id 
+  } = req.body;
+
+  const errors = validationResult(req);
+
+  // If there are validation errors
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav();
+    const classificationSelect = await utilities.buildClassificationList(classification_id);
+    const itemName = `${inv_make} ${inv_model}`;
+    
+    // Render the edit view again, passing back errors and submitted data
+    res.render("./inventory/edit-inventory", {
+      errors: errors.array(), // Pass the array of errors
+      title: "Editar " + itemName, // Re-create the title
+      nav,
+      classificationSelect,
+      // Pass all submitted data back to the form
+      inv_id,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_miles,
+      inv_color,
+      classification_id,
+    });
+    return;
+  }
+  // If no errors, proceed to the next middleware or controller function
+  next();
+};
+
 module.exports = validate;

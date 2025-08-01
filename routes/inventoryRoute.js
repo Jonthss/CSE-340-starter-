@@ -6,15 +6,12 @@ const utilities = require("../utilities");
 const invValidate = require('../utilities/inventory-validation');
 
 // Route to build management view
-// This must be BEFORE the /type/:classificationId route
 router.get("/", utilities.handleErrors(invController.buildManagementView));
 
 // Route to build add-classification view
-// This must be BEFORE the /type/:classificationId route
 router.get("/add-classification", utilities.handleErrors(invController.buildAddClassificationView));
 
 // Route to build add-inventory view
-// This must be BEFORE the /type/:classificationId route
 router.get("/add-inventory", utilities.handleErrors(invController.buildAddInventoryView));
 
 // Route to build inventory by classification view
@@ -23,6 +20,14 @@ router.get("/type/:classificationId", utilities.handleErrors(invController.build
 // Route to build inventory by detail view
 router.get("/detail/:invId", utilities.handleErrors(invController.buildByInventoryId));
 
+// Route to build the edit inventory view
+router.get("/edit/:invId", utilities.handleErrors(invController.buildEditInventoryView));
+
+// Route to fetch inventory data as JSON for AJAX requests
+router.get(
+    "/getInventory/:classification_id",
+    utilities.handleErrors(invController.getInventoryJSON)
+);
 
 // Process the new classification data
 router.post(
@@ -40,5 +45,16 @@ router.post(
     utilities.handleErrors(invController.addInventory)
 );
 
+/* *******************************************************
+ * Route to process the inventory update
+ * This will handle the form submission from the edit view
+ * *******************************************************/
+router.post(
+    "/update",
+    // It's a good practice to reuse validation rules
+    invValidate.inventoryRules(),
+    invValidate.checkUpdateData, // You will likely create this new validation check
+    utilities.handleErrors(invController.updateInventory)
+);
 
 module.exports = router;

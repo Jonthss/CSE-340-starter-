@@ -1,18 +1,21 @@
-<%# The h1 title for the management view %>
-<% if (title) { %>
-    <h1><%- title %></h1>
-<% } else {
-    res.redirect('/')
-} %>
+<%# The 'title' variable is passed from the controller %>
+<h1><%= title %></h1>
 
-<%# A placeholder for any flash messages %>
 <%- messages() %>
 
-<p>Welcome to the inventory management area. Please choose an option below:</p>
-
-<%# Links to add new classification and inventory %>
 <div class="management-links">
-    <a href="/inv/add-classification" title="Add a new vehicle classification">Add New Classification</a>
-    <br>
-    <a href="/inv/add-inventory" title="Add a new vehicle to inventory">Add New Vehicle</a>
+    <a href="/inv/add-classification">Add New Classification</a>
+    <a href="/inv/add-inventory">Add New Vehicle</a>
 </div>
+
+<%# New content for displaying inventory by classification %>
+<h2>Manage Inventory</h2>
+<p>Choose a classification from the list to see the items.</p>
+<%- classificationSelect %>
+
+<table id="inventoryDisplay"></table>
+
+<noscript>JavaScript must be enabled to use this page.</noscript>
+
+<%# Link to the new JavaScript file %>
+<script src="../../js/inventory.js"></script>
