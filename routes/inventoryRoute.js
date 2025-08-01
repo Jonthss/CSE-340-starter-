@@ -17,6 +17,12 @@ router.get("/add-inventory", utilities.handleErrors(invController.buildAddInvent
 // Route to build inventory by classification view
 router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId));
 
+// Route to build the delete confirmation view
+router.get("/delete/:invId", utilities.handleErrors(invController.buildDeleteConfirmationView));
+
+// Route to process the deletion
+router.post("/delete", utilities.handleErrors(invController.deleteInventoryItem));
+
 // Route to build inventory by detail view
 router.get("/detail/:invId", utilities.handleErrors(invController.buildByInventoryId));
 

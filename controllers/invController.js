@@ -266,4 +266,43 @@ invCont.updateInventory = utilities.handleErrors(async function (req, res, next)
   }
 });
 
+
+
+/* ***************************
+ * Build delete confirmation view
+ * ************************** */
+invCont.buildDeleteConfirmationView = utilities.handleErrors(async function (req, res, next) {
+  const inv_id = parseInt(req.params.invId);
+  let nav = await utilities.getNav();
+  const itemData = await invModel.getInventoryById(inv_id);
+  const itemName = `${itemData.inv_make} ${itemData.inv_model}`;
+  res.render("./inventory/delete-confirm", {
+    title: "Deletar " + itemName,
+    nav,
+    errors: null,
+    inv_id: itemData.inv_id,
+    inv_make: itemData.inv_make,
+    inv_model: itemData.inv_model,
+    inv_year: itemData.inv_year,
+    inv_price: itemData.inv_price,
+  });
+});
+
+/* ***************************
+ * Process the deletion
+ * ************************** */
+invCont.deleteInventoryItem = utilities.handleErrors(async function (req, res, next) {
+  const inv_id = parseInt(req.body.inv_id);
+  
+  const deleteResult = await invModel.deleteInventoryItem(inv_id);
+
+  if (deleteResult) { // if (1) é verdadeiro
+    req.flash("notice", 'O veículo foi deletado com sucesso.');
+    res.redirect("/inv/");
+  } else { // if (0) é falso
+    req.flash("notice", "Desculpe, a exclusão falhou.");
+    res.redirect(`/inv/delete/${inv_id}`);
+  }
+});
+
 module.exports = invCont;
