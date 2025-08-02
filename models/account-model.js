@@ -52,5 +52,64 @@ async function checkExistingEmail(account_email){
   }
 }
 
+/* *****************************
+* Get account data by id
+* *************************** */
+async function getAccountById(account_id){
+  try {
+    const result = await pool.query(
+      'SELECT account_id, account_firstname, account_lastname, account_email FROM account WHERE account_id = $1',
+      [account_id])
+    return result.rows[0]
+  } catch (error) {
+    return new Error("No matching account found")
+  }
+}
 
-module.exports = { registerAccount, getAccountByEmail, checkExistingEmail };
+/* *****************************
+ * Get account data by id
+ * *************************** */
+async function getAccountById(account_id){
+  try {
+    const result = await pool.query(
+      'SELECT account_id, account_firstname, account_lastname, account_email FROM account WHERE account_id = $1',
+      [account_id])
+    return result.rows[0]
+  } catch (error) {
+    return new Error("No matching account found")
+  }
+}
+
+/* ***************************
+ * Update account data
+ * ************************** */
+async function updateAccount(account_id, account_firstname, account_lastname, account_email) {
+  try {
+    const sql =
+      "UPDATE public.account SET account_firstname = $1, account_lastname = $2, account_email = $3 WHERE account_id = $4 RETURNING *"
+    const data = await pool.query(sql, [
+      account_firstname,
+      account_lastname,
+      account_email,
+      account_id
+    ])
+    return data.rows[0]
+  } catch (error) {
+    console.error("model error: " + error)
+  }
+}
+
+/* ***************************
+ * Update password
+ * ************************** */
+async function updatePassword(account_id, hashedPassword) {
+  try {
+    const sql = "UPDATE public.account SET account_password = $1 WHERE account_id = $2 RETURNING *"
+    const data = await pool.query(sql, [hashedPassword, account_id])
+    return data.rows[0]
+  } catch (error) {
+    console.error("model error: " + error)
+  }
+}
+
+module.exports = { registerAccount, getAccountByEmail, checkExistingEmail, getAccountById, updateAccount, updatePassword };

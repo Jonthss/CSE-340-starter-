@@ -1,7 +1,7 @@
 const invModel = require("../models/inventory-model");
-const Util = {};
-const jwt = require("jsonwebtoken")
-require("dotenv").config()
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+const Util = {}; // Use ONLY this object
 
 /* ************************
  * Constructs the nav HTML unordered list
@@ -81,11 +81,11 @@ Util.buildClassificationGrid = async function (data) {
 };
 
 /* **************************************
-* Build the detail view HTML
-* ************************************ */
-Util.buildDetailView = async function(data){
+ * Build the detail view HTML
+ * ************************************ */
+Util.buildDetailView = async function (data) {
   let detail = '';
-  if(data){
+  if (data) {
     const price = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(data.inv_price);
     const miles = new Intl.NumberFormat('en-US').format(data.inv_miles);
     detail = `
@@ -109,26 +109,26 @@ Util.buildDetailView = async function(data){
 }
 
 /* ****************************************
-* Build classification list for form
-* ************************************ */
+ * Build classification list for form
+ * ************************************ */
 Util.buildClassificationList = async function (classification_id = null) {
-    let data = await invModel.getClassifications()
-    let classificationList =
-      '<select name="classification_id" id="classificationList" required>'
-    classificationList += "<option value=''>Choose a Classification</option>"
-    data.rows.forEach((row) => {
-      classificationList += '<option value="' + row.classification_id + '"'
-      if (
-        classification_id != null &&
-        row.classification_id == classification_id
-      ) {
-        classificationList += " selected "
-      }
-      classificationList += ">" + row.classification_name + "</option>"
-    })
-    classificationList += "</select>"
-    return classificationList
-  }
+  let data = await invModel.getClassifications()
+  let classificationList =
+    '<select name="classification_id" id="classificationList" required>'
+  classificationList += "<option value=''>Choose a Classification</option>"
+  data.rows.forEach((row) => {
+    classificationList += '<option value="' + row.classification_id + '"'
+    if (
+      classification_id != null &&
+      row.classification_id == classification_id
+    ) {
+      classificationList += " selected "
+    }
+    classificationList += ">" + row.classification_name + "</option>"
+  })
+  classificationList += "</select>"
+  return classificationList
+}
 
 /* ****************************************
  * Middleware For Handling Errors
@@ -140,26 +140,26 @@ Util.handleErrors = (fn) => (req, res, next) =>
 
 
 /* ****************************************
-* Middleware to check token validity
-**************************************** */
+ * Middleware to check token validity
+ **************************************** */
 Util.checkJWTToken = (req, res, next) => {
- if (req.cookies.jwt) {
-  jwt.verify(
-   req.cookies.jwt,
-   process.env.ACCESS_TOKEN_SECRET,
-   function (err, accountData) {
-    if (err) {
-     req.flash("notice", "Please log in")
-     res.clearCookie("jwt")
-     return res.redirect("/account/login")
-    }
-    res.locals.accountData = accountData
-    res.locals.loggedin = 1
+  if (req.cookies.jwt) {
+    jwt.verify(
+      req.cookies.jwt,
+      process.env.ACCESS_TOKEN_SECRET,
+      function (err, accountData) {
+        if (err) {
+          req.flash("notice", "Please log in")
+          res.clearCookie("jwt")
+          return res.redirect("/account/login")
+        }
+        res.locals.accountData = accountData
+        res.locals.loggedin = 1
+        next()
+      })
+  } else {
     next()
-   })
- } else {
-  next()
- }
+  }
 }
 
 /* ****************************************
@@ -173,5 +173,25 @@ Util.checkLogin = (req, res, next) => {
     return res.redirect("/account/login")
   }
 }
+
+/* ****************************************
+ * Middleware to check authorization for specific views
+ * ************************************ */
+Util.checkAuthorization = (req, res, next) => {
+  // Check if user is logged in first
+  if (!res.locals.loggedin) {
+    req.flash("notice", "Please log in to access this page.");
+    return res.redirect("/account/login");
+  }
+
+  // Check account type
+  const accountType = res.locals.accountData.account_type;
+  if (accountType === "Employee" || accountType === "Admin") {
+    next(); // Authorized, proceed to the next function
+  } else {
+    req.flash("notice", "You are not authorized to access this page.");
+    return res.redirect("/account/login");
+  }
+};
 
 module.exports = Util;

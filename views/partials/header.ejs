@@ -1,8 +1,17 @@
-<header id="top-header">
-  <span class="siteName">
-    <a href="/" title="Return to home page">CSE Motors</a>
-  </span>
-  <div id="tools">
-    <a title="Click to log in" href="/account/login">My Account</a>
+<header>
+  <div id="top-header">
+    <span class="siteName">
+      <a href="/" title="Return to home page">CSE 340</a>
+    </span>
+    <div id="tools">
+      <%# This is the new conditional block %>
+      <% if (locals.loggedin) { %>
+        <a href="/account/" title="Go to account management">Welcome <%= locals.accountData.account_firstname %></a>
+        <a href="/account/logout" title="Click to log out" style="color: #1a237e;">Logout</a>
+      <% } else { %>
+        <a href="/account/login" title="Click to log in" style="color: #1a237e;">My Account</a>
+
+      <% } %>
+    </div>
   </div>
 </header>
