@@ -4,6 +4,18 @@
 
 <%- grid %>
 
+<%# Favorite button logic %>
+<% if (locals.loggedin) { %>
+  <% if (isFavorite) { %>
+    <p class="notice">This vehicle is already in your favorites!</p>
+  <% } else { %>
+    <form action="/favorites/add" method="post" class="favorite-form">
+      <input type="hidden" name="inv_id" value="<%= inv_id %>">
+      <button type="submit" class="favorite-btn">Add to Favorites</button>
+    </form>
+  <% } %>
+<% } %>
+
 <style>
 .detail-container {
   display: grid;

@@ -1,5 +1,6 @@
 const invModel = require("../models/inventory-model");
 const utilities = require("../utilities/");
+const favoritesModel = require("../models/favorites-model");
 
 const invCont = {};
 
@@ -31,6 +32,14 @@ invCont.buildByInventoryId = utilities.handleErrors(async function (req, res, ne
     error.status = 404;
     return next(error);
   }
+
+  // Check if the vehicle is in the user's favorites
+  let isFavorite = false;
+  if (res.locals.loggedin) {
+      const account_id = res.locals.accountData.account_id;
+      isFavorite = await favoritesModel.isFavorite(account_id, invId);
+  }
+
   const grid = await utilities.buildDetailView(data);
   let nav = await utilities.getNav();
   const vehicleName = `${data.inv_year} ${data.inv_make} ${data.inv_model}`;
@@ -39,6 +48,8 @@ invCont.buildByInventoryId = utilities.handleErrors(async function (req, res, ne
     nav,
     grid,
     errors: null,
+    isFavorite, // Pass the favorite status to the view
+    inv_id: invId // Pass the inventory ID to the view
   });
 });
 

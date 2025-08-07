@@ -19,6 +19,7 @@ const session = require("express-session")
 const pool = require('./database/');
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
+const favoritesRoute = require("./routes/favoritesRoute");
 
 
 /* ***********************
@@ -79,6 +80,9 @@ app.use("/inv", inventoryRoute)
 
 // Account routes
 app.use("/account", accountRoute)
+
+// Favorites routes
+app.use("/favorites", favoritesRoute);
 
 // Intentional Error Route for testing (before 404 handler)
 app.get("/trigger-error", (req, res, next) => {
