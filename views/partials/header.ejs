@@ -6,11 +6,11 @@
     <div id="tools">
       <%# This is the new conditional block %>
       <% if (locals.loggedin) { %>
-        <a href="/account/" title="Go to account management">Welcome <%= locals.accountData.account_firstname %></a>
-        <a href="/account/logout" title="Click to log out" style="color: #1a237e;">Logout</a>
+        <a style="color: #1a237e;">Welcome <%= locals.accountData.account_firstname %></a>
+        <a href="/account/" title="Go to account management" style="color: #388e3c;">Menu</a>
+        <a href="/account/logout" title="Click to log out" style="color: #d32f2f;">Logout</a>
       <% } else { %>
-        <a href="/account/login" title="Click to log in" style="color: #1a237e;">My Account</a>
-
+        <a href="/account/login" title="Click to log in" style="color: #1976d2;">My Account</a>
       <% } %>
     </div>
   </div>
