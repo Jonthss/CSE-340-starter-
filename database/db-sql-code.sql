@@ -245,3 +245,10 @@ WHERE inv_make = 'GM'
 UPDATE inventory
 SET inv_image = REPLACE(inv_image, '/images/', '/images/vehicles/'),
     inv_thumbnail = REPLACE(inv_thumbnail, '/images/', '/images/vehicles/');
+CREATE TABLE public.favorites (
+    favorite_id SERIAL PRIMARY KEY,
+    account_id INTEGER NOT NULL,
+    inv_id INTEGER NOT NULL,
+    CONSTRAINT fk_account FOREIGN KEY (account_id) REFERENCES public.account(account_id),
+    CONSTRAINT fk_inventory FOREIGN KEY (inv_id) REFERENCES public.inventory(inv_id)
+);
