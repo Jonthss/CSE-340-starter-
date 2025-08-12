@@ -39,7 +39,8 @@ async function registerAccount(req, res) {
     // Hash the password before storing
     let hashedPassword;
     try {
-        hashedPassword = await bcrypt.hashSync(account_password, 10);
+        // CORREÇÃO: Usar a função assíncrona bcrypt.hash com await
+        hashedPassword = await bcrypt.hash(account_password, 10);
     } catch (error) {
         req.flash("notice", 'Sorry, there was an error processing the registration.');
         res.status(500).render("account/register", {
@@ -204,7 +205,8 @@ async function updatePassword(req, res) {
     // Hash the password
     let hashedPassword;
     try {
-        hashedPassword = await bcrypt.hashSync(account_password, 10);
+        // CORREÇÃO: Usar a função assíncrona bcrypt.hash com await
+        hashedPassword = await bcrypt.hash(account_password, 10);
     } catch (error) {
         req.flash("notice", 'Sorry, there was an error processing the password change.');
         res.status(500).redirect(`/account/update/${account_id}`);
